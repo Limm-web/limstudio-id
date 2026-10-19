@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LimStudio &mdash; Segera Hadir | Indonesian AI &amp; Automation Lab</title>
+    
+    <!-- SEO & Metadata -->
+    <meta name="description" content="LimStudio (limstudio.ai.id) — Studio riset dan rekayasa kecerdasan buatan, sistem agen otonom, dan automasi cerdas terdepan di Indonesia. Segera Hadir.">
+    <meta name="keywords" content="LimStudio, AI Indonesia, Artificial Intelligence, Machine Learning, Autonomous Agents, Cloud Orchestration, Data Engineering">
+    <meta name="author" content="LimStudio">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Open Graph / Social Media -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://limstudio.ai.id/">
+    <meta property="og:title" content="LimStudio — Segera Hadir">
+    <meta property="og:description" content="Membangun fondasi kecerdasan buatan dan sistem otomatisasi generasi baru.">
+    <meta property="og:image" content="https://limstudio.ai.id/og-image.png">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="LimStudio — Segera Hadir">
+    <meta name="twitter:description" content="Membangun fondasi kecerdasan buatan dan sistem otomatisasi generasi baru.">
+
+    <!-- Minimal Modern Favicon SVG -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%2308090C'/%3E%3Cpath d='M8 8v16h12v-3.5H12V8H8z' fill='%2310B981'/%3E%3Ccircle cx='23' cy='11' r='2.5' fill='%23F59E0B'/%3E%3C/svg%3E">
+
+    <style>
+        :root {
+            --bg-base: #07090e;
+            --bg-surface: #0e121a;
+            --bg-elevated: #151b26;
+            --border-subtle: #1c2433;
+            --border-focus: #2d3748;
+            --text-main: #f1f5f9;
+            --text-muted: #8b9bb4;
+            --text-faint: #475569;
+            --accent-emerald: #10b981;
+            --accent-amber: #f59e0b;
+            --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Plus Jakarta Sans", Inter, sans-serif;
+            --font-mono: ui-monospace, SFMono-Regular, "JetBrains Mono", Menlo, Consolas, monospace;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg-base);
+            color: var(--text-main);
+            font-family: var(--font-sans);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            overflow-x: hidden;
+            position: relative;
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Subtle Background Grid & Canvas */
+        #bg-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.6;
+        }
+
+        .grid-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+            background-size: 48px 48px;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .container {
+            max-width: 1080px;
+            margin: 0 auto;
+            padding: 0 24px;
+            width: 100%;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* HEADER */
+        header {
+            padding: 32px 0 24px;
+            border-bottom: 1px solid var(--border-subtle);
+        }
+
+        .header-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .brand-cluster {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .brand-logo-mark {
+            width: 34px;
+            height: 34px;
+            background: var(--bg-elevated);
+            border: 1px solid var(--border-focus);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--font-mono);
+            font-weight: 700;
+            font-size: 15px;
+            color: var(--accent-emerald);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+        }
+
+        .brand-title {
+            font-size: 18px;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            color: #ffffff;
+        }
+
+        .brand-badge {
+            font-family: var(--font-mono);
+            font-size: 11px;
+            padding: 2px 7px;
+            background: rgba(16, 185, 129, 0.12);
+            color: var(--accent-emerald);
+            border: 1px solid rgba(16, 185, 129, 0.25);
+            border-radius: 4px;
+            letter-spacing: 0.04em;
+        }
+
+        .header-meta {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            font-family: var(--font-mono);
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        .status-dot-pulse {
+            width: 8px;
+            height: 8px;
+            background-color: var(--accent-emerald);
+            border-radius: 50%;
+            display: inline-block;
+            box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+            animation: pulse-ring 2.4s infinite cubic-bezier(0.66, 0, 0, 1);
+        }
+
+        @keyframes pulse-ring {
+            0% {
+                box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.6);
+            }
+            70% {
+                box-shadow: 0 0 0 8px rgba(16, 185, 129, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
+            }
+        }
+
+        /* MAIN HERO */
+        main {
+            padding: 72px 0 64px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .announcement-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--bg-surface);
+            border: 1px solid var(--border-subtle);
+            padding: 6px 14px;
+            border-radius: 6px;
+            font-family: var(--font-mono);
+            font-size: 12px;
+            color: var(--accent-amber);
+            margin-bottom: 24px;
+            width: fit-content;
+        }
+
+        .hero-title {
+            font-size: clamp(34px, 5.5vw, 56px);
+            font-weight: 800;
+            line-height: 1.15;
+            letter-spacing: -0.035em;
+            color: #ffffff;
+            margin-bottom: 20px;
+            max-width: 860px;
+        }
+
+        .hero-title span.highlight {
+            color: #ffffff;
+            position: relative;
+        }
+
+        .hero-title span.highlight::after {
+            content: "";
+            position: absolute;
+            bottom: 4px;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--accent-emerald);
+            opacity: 0.8;
+            border-radius: 2px;
+        }
+
+        .hero-lead {
+            font-size: clamp(16px, 2vw, 19px);
+            color: var(--text-muted);
+            max-width: 680px;
+            margin-bottom: 40px;
+            font-weight: 400;
+            line-height: 1.6;
+        }
+
+        /* PILLARS / SPEC TILES */
+        .pillars-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 16px;
+            margin-bottom: 48px;
+        }
+
+        .pillar-card {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-subtle);
+            border-radius: 8px;
+            padding: 24px;
+            transition: border-color 0.2s ease, transform 0.2s ease;
+        }
+
+        .pillar-card:hover {
+            border-color: var(--border-focus);
+            transform: translateY(-2px);
+        }
+
+        .pillar-num {
+            font-family: var(--font-mono);
+            font-size: 12px;
+            color: var(--accent-emerald);
+            margin-bottom: 12px;
+            font-weight: 600;
+        }
+
+        .pillar-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 8px;
+            letter-spacing: -0.01em;
+        }
+
+        .pillar-desc {
+            font-size: 13.5px;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
+        /* NOTIFICATION / WAITLIST BOX */
+        .waitlist-card {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-subtle);
+            border-radius: 8px;
+            padding: 32px;
+            max-width: 620px;
+            margin-bottom: 48px;
+        }
+
+        .waitlist-header {
+            margin-bottom: 18px;
+        }
+
+        .waitlist-header h3 {
+            font-size: 18px;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 6px;
+            letter-spacing: -0.01em;
+        }
+
+        .waitlist-header p {
+            font-size: 14px;
+            color: var(--text-muted);
+        }
+
+        .waitlist-form {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .waitlist-input {
+            flex: 1 1 260px;
+            background: var(--bg-base);
+            border: 1px solid var(--border-focus);
+            border-radius: 6px;
+            padding: 12px 16px;
+            color: var(--text-main);
+            font-family: var(--font-sans);
+            font-size: 14px;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .waitlist-input:focus {
+            border-color: var(--accent-emerald);
+        }
+
+        .waitlist-btn {
+            background: var(--accent-emerald);
+            color: #07090e;
+            border: none;
+            border-radius: 6px;
+            padding: 12px 22px;
+            font-weight: 700;
+            font-size: 14px;
+            cursor: pointer;
+            transition: opacity 0.2s, transform 0.1s;
+            font-family: var(--font-sans);
+        }
+
+        .waitlist-btn:hover {
+            opacity: 0.92;
+        }
+
+        .waitlist-btn:active {
+            transform: scale(0.98);
+        }
+
+        .form-feedback {
+            font-family: var(--font-mono);
+            font-size: 12px;
+            margin-top: 12px;
+            display: none;
+        }
+
+        .form-feedback.success {
+            display: block;
+            color: var(--accent-emerald);
+        }
+
+        .form-feedback.error {
+            display: block;
+            color: #ef4444;
+        }
+
+        /* TELEMETRY BAR */
+        .telemetry-cluster {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+            padding: 16px 20px;
+            background: rgba(14, 18, 26, 0.6);
+            border: 1px solid var(--border-subtle);
+            border-radius: 6px;
+            font-family: var(--font-mono);
+            font-size: 12px;
+            color: var(--text-muted);
+            align-items: center;
+        }
+
+        .telemetry-item strong {
+            color: var(--text-main);
+        }
+
+        /* FOOTER */
+        footer {
+            padding: 32px 0;
+            border-top: 1px solid var(--border-subtle);
+            font-size: 13px;
+            color: var(--text-faint);
+        }
+
+        .footer-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 20px;
+        }
+
+        .footer-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .footer-links a:hover {
+            color: var(--text-main);
+        }
+
+        @media (max-width: 640px) {
+            .header-meta {
+                display: none;
+            }
+            .waitlist-form {
+                flex-direction: column;
+            }
+            .waitlist-btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <canvas id="bg-canvas"></canvas>
+    <div class="grid-overlay"></div>
+
+    <!-- TOP HEADER -->
+    <header>
+        <div class="container header-inner">
+            <a href="/" class="brand-cluster">
+                <div class="brand-logo-mark">L</div>
+                <div>
+                    <span class="brand-title">LIMSTUDIO</span>
+                </div>
+                <span class="brand-badge">.AI.ID</span>
+            </a>
+
+            <div class="header-meta">
+                <span><span class="status-dot-pulse"></span> INFRA ACTIVE</span>
+                <span id="live-clock">--:--:-- WIB</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- HERO CONTENT -->
+    <main>
+        <div class="container">
+            <div class="announcement-tag">
+                <span>&bull;</span> SEGERA HADIR &bull; EST. 2026
+            </div>
+
+            <h1 class="hero-title">
+                Membangun Fondasi <span class="highlight">Kecerdasan Buatan</span> &amp; Otomasi Terapan.
+            </h1>
+
+            <p class="hero-lead">
+                <strong>LimStudio</strong> sedang mempersiapkan platform dan laboratorium rekayasa AI independen di Indonesia. Fokus kami adalah arsitektur sistem agen otonom, pipeline machine learning berlatensi rendah, dan otomatisasi komputasi awan.
+            </p>
+
+            <!-- 3 PILLARS OF ENGINEERING -->
+            <div class="pillars-grid">
+                <div class="pillar-card">
+                    <div class="pillar-num">01 / ARSITEKTUR</div>
+                    <div class="pillar-title">Autonomous Agents</div>
+                    <div class="pillar-desc">
+                        Sistem multi-agen otonom untuk memecahkan problem data dan alur kerja kompleks tanpa intervensi manual.
+                    </div>
+                </div>
+
+                <div class="pillar-card">
+                    <div class="pillar-num">02 / KOMPUTASI</div>
+                    <div class="pillar-title">High-Performance ML</div>
+                    <div class="pillar-desc">
+                        Pemodelan prediktif tabular, fine-tuning model frontier, dan inferensi presisi tinggi berbiaya optimal.
+                    </div>
+                </div>
+
+                <div class="pillar-card">
+                    <div class="pillar-num">03 / EKOSISTEM</div>
+                    <div class="pillar-title">Intelligent Automation</div>
+                    <div class="pillar-desc">
+                        Integrasi alur kerja end-to-end yang menyambungkan API, sistem cloud, dan antarmuka analitik cerdas.
+                    </div>
+                </div>
+            </div>
+
+            <!-- WAITLIST / EARLY ACCESS FORM -->
+            <div class="waitlist-card">
+                <div class="waitlist-header">
+                    <h3>Dapatkan Notifikasi Peluncuran</h3>
+                    <p>Masukkan email Anda untuk menerima kabar resmi saat platform kami mengudara.</p>
+                </div>
+
+                <form id="waitlist-form" class="waitlist-form" onsubmit="handleWaitlistSubmit(event)">
+                    <input 
+                        type="email" 
+                        id="waitlist-email" 
+                        class="waitlist-input" 
+                        placeholder="nama@domain.com" 
+                        required
+                        autocomplete="email"
+                    >
+                    <button type="submit" class="waitlist-btn">Beri Tahu Saya</button>
+                </form>
+                <div id="form-feedback" class="form-feedback"></div>
+            </div>
+
+            <!-- TELEMETRY / DOMAIN STATUS -->
+            <div class="telemetry-cluster">
+                <div class="telemetry-item">NODE: <strong>limstudio.ai.id</strong></div>
+                <div class="telemetry-item">REGISTRY: <strong>PANDI / Indonesia (.id)</strong></div>
+                <div class="telemetry-item">SECURITY: <strong>TLS 1.3 / HTTP/3 Ready</strong></div>
+                <div class="telemetry-item">STATUS: <strong style="color: var(--accent-emerald);">DEPLOYMENT IN PROGRESS</strong></div>
+            </div>
+        </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="container footer-inner">
+            <div>
+                &copy; 2026 LimStudio (<a href="https://limstudio.ai.id" style="color: inherit; text-decoration: none;">limstudio.ai.id</a>). Hak Cipta Dilindungi.
+            </div>
+            <div class="footer-links">
+                <a href="mailto:contact@limstudio.ai.id">contact@limstudio.ai.id</a>
+                <a href="https://github.com/Limm-web" target="_blank" rel="noopener">GitHub</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- INTERACTIVE SCRIPTS -->
+    <script>
+        // Live Jakarta Clock (WIB)
+        function updateClock() {
+            const options = {
+                timeZone: 'Asia/Jakarta',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit',
+                hour12: false
+            };
+            const formatter = new Intl.DateTimeFormat([], options);
+            const clockEl = document.getElementById('live-clock');
+            if (clockEl) {
+                clockEl.textContent = formatter.format(new Date()) + ' WIB';
+            }
+        }
+        setInterval(updateClock, 1000);
+        updateClock();
+
+        // Lightweight Interactive Starfield / Ambient Canvas
+        (function() {
+            const canvas = document.getElementById('bg-canvas');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            let width, height;
+            const points = [];
+            const count = 35;
+
+            function resize() {
+                width = canvas.width = window.innerWidth;
+                height = canvas.height = window.innerHeight;
+            }
+            window.addEventListener('resize', resize);
+            resize();
+
+            for (let i = 0; i < count; i++) {
+                points.push({
+                    x: Math.random() * width,
+                    y: Math.random() * height,
+                    vx: (Math.random() - 0.5) * 0.25,
+                    vy: (Math.random() - 0.5) * 0.25,
+                    size: Math.random() * 1.5 + 0.5,
+                    alpha: Math.random() * 0.5 + 0.2
+                });
+            }
+
+            function draw() {
+                ctx.clearRect(0, 0, width, height);
+                for (let i = 0; i < points.length; i++) {
+                    const p = points[i];
+                    p.x += p.vx;
+                    p.y += p.vy;
+
+                    if (p.x < 0) p.x = width;
+                    if (p.x > width) p.x = 0;
+                    if (p.y < 0) p.y = height;
+                    if (p.y > height) p.y = 0;
+
+                    ctx.fillStyle = `rgba(16, 185, 129, ${p.alpha * 0.6})`;
+                    ctx.beginPath();
+                    ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+                    ctx.fill();
+                }
+                requestAnimationFrame(draw);
+            }
+            draw();
+        })();
+
+        // Waitlist Form Handler (Stores in LocalStorage + Mailto / Webhook ready)
+        function handleWaitlistSubmit(e) {
+            e.preventDefault();
+            const emailInput = document.getElementById('waitlist-email');
+            const feedback = document.getElementById('form-feedback');
+            const email = emailInput.value.trim();
+
+            if (!email) return;
+
+            try {
+                // Save locally
+                const existing = JSON.parse(localStorage.getItem('limstudio_waitlist') || '[]');
+                if (!existing.includes(email)) {
+                    existing.push(email);
+                    localStorage.setItem('limstudio_waitlist', JSON.stringify(existing));
+                }
+
+                feedback.className = 'form-feedback success';
+                feedback.textContent = '✓ Terima kasih! Alamat ' + email + ' telah terdaftar dalam antrean prioritas peluncuran.';
+                emailInput.value = '';
+            } catch (err) {
+                feedback.className = 'form-feedback error';
+                feedback.textContent = 'Gagal menyimpan email. Silakan coba lagi.';
+            }
+        }
+    </script>
+</body>
+</html>
